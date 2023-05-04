@@ -1,6 +1,7 @@
 class Usuario():
 
     lista_usuarios = []
+    lista_dni = []
     lista_mail = []
     lista_nom_usuarios = []
 

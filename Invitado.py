@@ -17,10 +17,10 @@ class Invitado():
     #     return (pass)
     
 
-     def actualizar_datos(self,Usuario.lista_dnis,Usuario.lista_mails):
+     def actualizar_datos(self):
+          lista_dni_usuario = Usuario.lista_dni
+          lista_mails_usuario = Usuario.lista_mail
 
-          dni_esta = "no"
-          mail_esta = "no"
           if (len(Invitado.lista_dni_invitados) == 0) or (len(Invitado.lista_mail_invitados) == 0):
                print("No se han creado usuarios invitados todavía. Para crear uno, seleccione la opción correspondiente en el menú.")
           for i in range(len(Invitado.lista_invitados)):
