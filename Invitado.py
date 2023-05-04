@@ -1,7 +1,10 @@
+from Usuario import Usuario
+
 class Invitado():
 
-    lista_invitados = []
-    lista_dni_mail = [] #que tenga adentro listas de 2 elementos: dni y mail
+     lista_invitados = []
+     lista_dni_invitados = []
+     lista_mail_invitados = []
 
      def __init__(self, nombre, apellido, dni, email, cantidad_ingresos =0):  
         self.nombre = nombre
@@ -14,10 +17,30 @@ class Invitado():
     #     return (pass)
     
 
-     def actualizar_datos(self):
-          #algo con lista_dni_mail []
+     def actualizar_datos(self,Usuario.lista_dnis,Usuario.lista_mails):
+
+          dni_esta = "no"
+          mail_esta = "no"
+          if (len(Invitado.lista_dni_invitados) == 0) or (len(Invitado.lista_mail_invitados) == 0):
+               print("No se han creado usuarios invitados todavía. Para crear uno, seleccione la opción correspondiente en el menú.")
+          for i in range(len(Invitado.lista_invitados)):
+               if dni
+          
+          for d in range(len(Invitado.lista_dni_invitados)):
+               if self.dni == Invitado.lista_dni_invitados[d]:
+                    dni_ingresado = "si"
+          for m in range(len(Invitado.lista_mail_invitados)):
+               if self.mail == Invitado.lista_mail_invitados[m]:
+                    mail_ingresado = "si"
+
+          
+
+
+
           if nunca ingreso:
-               print("El ")
+               print("Nunca ha ingresado todavía como Invitado. Debe registrarse.")
+          else:
+              
           
      
         pass
