@@ -532,16 +532,8 @@ while(menu_usuario != 4):
                 nom_usuario = input("Ingrese su nombre de usuario: ")
                 for i in range(len(Usuario.lista_usuarios)):
                     if nom_usuario == Usuario.lista_usuarios[i].nom_usuario:
-                        contrasena = input("Primero ingrese su contraseña vieja: ")
-                        try:
-                            if contrasena != Usuario.lista_usuarios[i].contra:
-                                raise ValueError
-                            contra_nueva = input("Ingrese su nueva contraseña: ")
-                            Usuario.lista_usuarios[i].cambiar_contra(contra_nueva)
-                            guardar_usuario()
-                            esta = "Sí"
-                        except:
-                            print("La contraseña es incorrecta.")
+                        esta = Usuario.lista_usuarios[i].cambiar_contra(esta)
+                        guardar_usuario()
                 if esta == "No":
                     print("El nombre de usuario no existe.")
 

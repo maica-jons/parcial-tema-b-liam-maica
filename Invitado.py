@@ -9,8 +9,8 @@ class Invitado():
         self.email = email
         self.cantidad_ingresos = cantidad_ingresos
      
-     def __str__(self):
-        return (pass)
+    #  def __str__(self):
+    #     return (pass)
     
 
     def modificar_datos(self):
