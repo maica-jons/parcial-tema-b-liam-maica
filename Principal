@@ -257,6 +257,7 @@ def menu_usuario():
     4- Ingresar usuario invitado
     5- Cambiar usuario
     6- Actualizar datos de usuario invitado
+    8- Eliminar usuario invitado
     7- Salir
 
     """))
@@ -496,11 +497,11 @@ def menu_principal():
 
 leer_usuarios()
 leer_invitado()
-while(menu_usuario != 7):
+while(menu_usuario != 8):
     entrar = "no"
     while entrar == "no":
         guardar = menu_usuario()
-        if guardar in [1,2,3,4,5,6,7]:
+        if guardar in [1,2,3,4,5,6,7,8]:
             entrar = "si"
 
     if guardar == 1:
@@ -529,8 +530,8 @@ while(menu_usuario != 7):
                 esta_mail = "No"
                 while esta_mail == "No":
                     email = input("Ingrese su email: ")
-                    for i in range(len(Invitado.lista_mail_invitados)):
-                        if email == Invitado.lista_mail_invitados[i].email:
+                    for i in range(len(Invitado.lista_invitados)):
+                        if email == Invitado.lista_invitados[i].email:
                             esta_mail = "Sí"
                     if esta_mail == "No":
                         print("El email no existe.")
@@ -541,8 +542,8 @@ while(menu_usuario != 7):
                         try:
                             dni = int(input("Ingrese su dni: "))
                             dni = validar_longitud_dni(dni)
-                            for i in range(len(Invitado.lista_dni_invitados)):
-                                if dni == Invitado.lista_dni_invitados[i].dni:
+                            for i in range(len(Invitado.lista_invitados)):
+                                if dni == Invitado.lista_invitados[i].dni:
                                     esta_dni = "Sí"
                                     dni_aprobado = "si"
                             if esta_dni == "No":
@@ -632,8 +633,8 @@ while(menu_usuario != 7):
                 esta_mail = "No"
                 while esta_mail == "No":
                     email = input("Ingrese su email: ")
-                    for i in range(len(Invitado.lista_mail_invitados)):
-                        if email == Invitado.lista_mail_invitados[i].email:
+                    for i in range(len(Invitado.lista_invitados)):
+                        if email == Invitado.lista_invitados[i].email:
                             esta_mail = "Sí"
                     if esta_mail == "No":
                         print("El email no existe.")
@@ -644,8 +645,8 @@ while(menu_usuario != 7):
                         try:
                             dni = int(input("Ingrese su dni: "))
                             dni = validar_longitud_dni(dni)
-                            for i in range(len(Invitado.lista_dni_invitados)):
-                                if dni == Invitado.lista_dni_invitados[i].dni:
+                            for i in range(len(Invitado.lista_invitados)):
+                                if dni == Invitado.lista_invitados[i].dni:
                                     esta_dni = "Sí"
                                     dni_aprobado = "si"
                             if esta_dni == "No":
@@ -659,10 +660,57 @@ while(menu_usuario != 7):
                         guardar_invitado()
                 if esta_invitado == "No":
                     print("El dni y el email no coinciden. Intente nuevamente.")
+    elif guardar == 7: 
+        if len(Invitado.lista_invitados) == 0:
+            print("No hay ningun usuario invitado ingresado. Primero vaya a ingresar uno.")
+        else:
+            try:
+                sub_menu = int(input("""Elija la acción que desea:
+                1- Eliminar por dni
+                2- Eliminar por email"""))
+                while sub_menu != 1 and sub_menu != 2:
+                    sub_menu=int(input("""Elija la acción que desea:
+                1- Eliminar por email
+                2- Eliminar por dni"""))
+            except:   
+                print("Error. Ingrese el numero de la opcion que desea hacer.")     
+            if sub_menu == 1:
+                esta_mail = "No"
+                while esta_mail == "No":
+                    email = input("Ingrese su email: ")
+                    for i in range(len(Invitado.lista_invitados)):
+                        if email == Invitado.lista_invitados[i].email:
+                            Invitado.lista_dni_invitados.remove(Invitado.lista_invitados[i].dni)
+                            Invitado.lista_mail_invitados.remove(Invitado.lista_invitados[i].email)
+                            Invitado.lista_invitados.remove(Invitado.lista_invitados[i])
+                            esta_mail = "Sí"
+                    if esta_mail == "No":
+                        print("El email no existe.")
+            elif sub_menu == 2:
+                esta_dni = "No"
+                while esta_dni == "No":
+                    dni_aprobado = "no"
+                    while dni_aprobado == "no":
+                        try:
+                            dni = int(input("Ingrese su dni: "))
+                            dni = validar_longitud_dni(dni)
+                            for i in range(len(Invitado.lista_invitados)):
+                                if dni == Invitado.lista_invitados[i].dni:
+                                    Invitado.lista_dni_invitados.remove(Invitado.lista_invitados[i].dni)
+                                    Invitado.lista_mail_invitados.remove(Invitado.lista_invitados[i].email)
+                                    Invitado.lista_invitados.remove(Invitado.lista_invitados[i])
+                                    esta_dni = "Sí"
+                                    dni_aprobado = "si"
+                            if esta_dni == "No":
+                                print("El dni no existe.")
+                        except:
+                            print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
 
 
-    elif guardar < 1 or guardar > 7 :
+
+
+    elif guardar < 1 or guardar > 8 :
         print("Error al elegir acción. Intente de nuevo: ")
 
-    elif guardar == 7:
+    elif guardar == 8:
         break
