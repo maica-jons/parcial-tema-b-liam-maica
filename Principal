@@ -255,7 +255,7 @@ def menu_usuario():
     2- Iniciar sesion como usuario invitado
     3- Registrar usuario
     4- Ingresar usuario invitado
-    5- Cambiar usuario
+    5- Cambiar contraseña de usuario
     6- Actualizar datos de usuario invitado
     8- Eliminar usuario invitado
     7- Salir
@@ -604,7 +604,7 @@ while(menu_usuario != 8):
                 print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
         Invitado.lista_dni_invitados.append(dni)
         mail = input("Ingrese su mail: ")
-        while mail in Usuario.lista_mail and mail in Invitado.lista_mail_invitados:
+        while mail in Usuario.lista_mail or mail in Invitado.lista_mail_invitados:
             mail = input("Ese mail ya tiene un usuario. Ingrese su mail: ")
         Invitado.lista_mail_invitados.append(mail)
         invitado = Invitado(nombre, apellido, dni, mail)
