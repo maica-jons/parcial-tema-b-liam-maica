@@ -256,7 +256,7 @@ def menu_usuario():
     2- Iniciar sesion como usuario invitado
     3- Registrar usuario
     4- Ingresar usuario invitado
-    5- Cambiar usuario
+    5- Cambiar contraseña de usuario
     6- Actualizar datos de usuario invitado
     7- Eliminar usuario invitado
     8- Visualizar grafico barras 
