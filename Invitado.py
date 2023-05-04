@@ -34,8 +34,8 @@ class Invitado():
                for d in range(len(Invitado.lista_invitados)):
                     if self.dni == Invitado.lista_invitados[d].dni and self.email == Invitado.lista_invitados[d].email:
                          print("Perfecto. Puede actualizar sus datos.")
-                         entrar = "si"
-                         while entrar == "si":
+                         salir = "no"
+                         while salir != "si":
                               try:
                                    dato = int(input("""Ingrese el nro. correspondiente para el dato que desea actualizar.
                                    1- Nombre
@@ -50,25 +50,26 @@ class Invitado():
                                         3- DNI
                                         4- email
                                         """))
+                                   if dato == 1:
+                                        nombre_nuevo = input("Ingrese el nuevo nombre: ")
+                                        self.nombre = nombre_nuevo
+                                        print(f"El nombre fue actualizado con éxito a {self.nombre}")
+                                   elif dato == 2:
+                                        apellido_nuevo = input("Ingrese el nuevo apellido: ")
+                                        self.apellido = apellido_nuevo
+                                        print(f"El apellido fue actualizado con éxito a {self.apellido}")
+                                   elif dato == 3:
+                                        dni_nuevo = input("Ingrese el nuevo DNI: ")
+                                        self.dni = dni_nuevo
+                                        print(f"El DNI fue actualizado con éxito a {self.dni}")
+                                   elif dato == 4:
+                                        email_nuevo = input("Ingrese el nuevo email: ")
+                                        self.email = email_nuevo
+                                        print(f"El email fue actualizado con éxito a {self.email}")
                                    
-                                   entrar = "no"
+                                   salir = input("Si desea modificar otro dato, ingrese 'si'. Si no quiere modificar nada más. Ingrese cualquier tecla.")
                               except:
                                    print("Ingrese UN NUMERO.")
-                         if dato == 1:
-                              nombre_nuevo = input("Ingrese el nuevo nombre: ")
-                              self.nombre = nombre_nuevo
-                              print(f"El nombre fue actualizado con éxito a {self.nombre}")
-                         elif dato == 2:
-                              apellido_nuevo = input("Ingrese el nuevo apellido: ")
-                              self.apellido = apellido_nuevo
-                              print(f"El apellido fue actualizado con éxito a {self.apellido}")
-                         elif dato == 3:
-                              dni_nuevo = input("Ingrese el nuevo DNI: ")
-                              self.dni = dni_nuevo
-                              print(f"El DNI fue actualizado con éxito a {self.dni}")
-                         elif dato == 4:
-                              email_nuevo = input("Ingrese el nuevo email: ")
-                              self.email = email_nuevo
-                              print(f"El email fue actualizado con éxito a {self.email}")
+                         
 
 
