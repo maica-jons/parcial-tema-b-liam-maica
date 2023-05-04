@@ -141,6 +141,26 @@ def leer_usuarios():
     except:
         print("")
 
+def guardar_invitado():
+    with open('./invitados.txt','w') as archivo_invitados:
+        for invitado in Invitado.lista_invitados:
+            archivo_invitados.write(f"{invitado.nombre},{invitado.apellido},{invitado.dni},{invitado.email},{invitado.cantidad_ingresos}\n")
+    archivo_invitados.close()
+
+def leer_invitado():
+    try:
+        with open('./usuarios.txt','r') as archivo_invitados:
+            for invitado in archivo_invitados:
+                datos_invitado = invitado.split(",")
+                datos_invitado[5] = datos_invitado[5].rstrip("\n")
+                obj_invitado = Invitado(datos_invitado[0], datos_invitado[1], datos_invitado[2], datos_invitado[3], datos_invitado[4])
+                Invitado.lista_invitados.append(obj_invitado)
+                Invitado.lista_dni_invitados.append(obj_invitado.dni)
+                Invitado.lista_mail_invitados.append(obj_invitado.email)
+        archivo_invitados.close()
+    except:
+        print("")
+
 def guardar_archivos():
     with open('./ligas.txt','w') as archivo_ligas:
         with open('./clubes.txt','w') as archivo_clubes:
@@ -474,6 +494,7 @@ def menu_principal():
             break
 
 leer_usuarios()
+leer_invitado()
 while(menu_usuario != 6):
     entrar = "no"
     while entrar == "no":
@@ -502,6 +523,7 @@ while(menu_usuario != 6):
         if len(Invitado.lista_invitados) == 0:
             print("No hay ningun usuario invitado ingresado. Primero vaya a ingresarse.")
         else: 
+            pass
             
     elif guardar == 3:
         nombre = input("Ingrese su nombre: ")
@@ -511,11 +533,15 @@ while(menu_usuario != 6):
             try:
                 dni = int(input("Ingrese su dni: "))
                 dni = validar_longitud_dni(dni)
+                while dni in Usuario.lista_dni and dni in Invitado.lista_dni_invitados:
+                    dni = int(input("Ese dni ya fue ingresado. Ingrese su dni: "))
+                    dni = validar_longitud_dni(dni)
                 dni_aprobado = "si"
             except:
                 print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
+        Usuario.lista_dni.append(dni)
         mail = input("Ingrese su mail: ")
-        while mail in Usuario.lista_mail:
+        while mail in Usuario.lista_mail and mail in Invitado.lista_mail_invitados:
             mail = input("Ese mail ya tiene un usuario. Ingrese su mail: ")
         Usuario.lista_mail.append(mail)
         nom_usuario = input("Ingrese un nombre de usuario: ")
@@ -536,10 +562,19 @@ while(menu_usuario != 6):
             try:
                 dni = int(input("Ingrese su dni: "))
                 dni = validar_longitud_dni(dni)
+                while dni in Usuario.lista_dni and dni in Invitado.lista_dni_invitados:
+                    dni = int(input("Ese dni ya fue ingresado. Ingrese su dni: "))
+                    dni = validar_longitud_dni(dni)
                 dni_aprobado = "si"
             except:
                 print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
+        invitado.lista_dni_invitados.append(dni)
         mail = input("Ingrese su mail: ")
+        while mail in Usuario.lista_mail and mail in Invitado.lista_mail_invitados:
+            mail = input("Ese mail ya tiene un usuario. Ingrese su mail: ")
+        Invitado.lista_mail_invitados.append(mail)
+        invitado = Invitado(nombre, apellido, dni, mail)
+        guardar_invitado()
     elif guardar == 5 :
         if len(Usuario.lista_usuarios) == 0:
             print("No hay ningun usuario registrado. Para cambiar una contraseña, debe haber algún usuario registrado.")
