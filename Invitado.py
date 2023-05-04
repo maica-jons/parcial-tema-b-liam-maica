@@ -66,7 +66,9 @@ class Invitado():
                                         print(f"El email fue actualizado con éxito a {self.email}")
                                    elif dato == 4:
                                         dni_nuevo = input("Ingrese el nuevo DNI: ")
-                                        
+                                        while dni_nuevo in lista_dni_usuario or dni_nuevo in Invitado.lista_dni_invitados:
+                                             dni_nuevo = input("Ese DNI ya está registrado. No pueden haber 2 usuarios con mismo DNI. Elija otro: ")
+
                                         self.dni = dni_nuevo
                                         print(f"El DNI fue actualizado con éxito a {self.dni}")
                                         
