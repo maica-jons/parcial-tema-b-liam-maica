@@ -137,6 +137,7 @@ def leer_usuarios():
                 Usuario.lista_usuarios.append(obj_usuario)
                 Usuario.lista_nom_usuarios.append(obj_usuario.nom_usuario)
                 Usuario.lista_mail.append(obj_usuario.mail)
+                Usuario.lista_dni.append(obj_usuario.dni)
         archivo_usuarios.close()
     except:
         print("")
@@ -149,7 +150,7 @@ def guardar_invitado():
 
 def leer_invitado():
     try:
-        with open('./usuarios.txt','r') as archivo_invitados:
+        with open('./invitados.txt','r') as archivo_invitados:
             for invitado in archivo_invitados:
                 datos_invitado = invitado.split(",")
                 datos_invitado[5] = datos_invitado[5].rstrip("\n")
@@ -499,7 +500,7 @@ while(menu_usuario != 6):
     entrar = "no"
     while entrar == "no":
         guardar = menu_usuario()
-        if guardar in [1,2,3,4,5,6]:
+        if guardar in [1,2,3,4,5,6,7]:
             entrar = "si"
 
     if guardar == 1:
@@ -523,7 +524,38 @@ while(menu_usuario != 6):
         if len(Invitado.lista_invitados) == 0:
             print("No hay ningun usuario invitado ingresado. Primero vaya a ingresarse.")
         else: 
-            pass
+            try:
+                sub_menu = int(input("""Elija el metodo para ingresar:
+                1- Utilizando email
+                2- Utilizando dni"""))
+                while sub_menu != 1 and sub_menu != 2:
+                    sub_menu=int(input("""Elija la acción que desea:
+                1- Comprar Jugador
+                2- Cambiar Presupuesto"""))
+            except:
+                print("Error. Ingrese el numero de la opcion que desea hacer.")
+            if sub_menu == 1:   
+                esta = "No"
+                while esta == "No":
+                    email = input("Ingrese su email: ")
+                    for i in range(len(Invitado.lista_mail_invitados)):
+                        if email == Invitado.lista_mail_invitados[i].email:
+                            esta = "Sí"
+                            print("Ingresado correctamente.")
+                            menu_principal()
+                    if esta == "No":
+                        print("El email no existe.")
+            if sub_menu == 2:   
+                esta = "No"
+                while esta == "No":
+                    dni = input("Ingrese su dni: ")
+                    for i in range(len(Invitado.lista_mail_invitados)):
+                        if dni == Invitado.lista_mail_invitados[i].dni:
+                            esta = "Sí"
+                            print("Ingresado correctamente.")
+                            menu_principal()
+                    if esta == "No":
+                        print("El dni no existe.")
             
     elif guardar == 3:
         nombre = input("Ingrese su nombre: ")
@@ -562,13 +594,13 @@ while(menu_usuario != 6):
             try:
                 dni = int(input("Ingrese su dni: "))
                 dni = validar_longitud_dni(dni)
-                while dni in Usuario.lista_dni and dni in Invitado.lista_dni_invitados:
+                while dni in Usuario.lista_dni or dni in Invitado.lista_dni_invitados:
                     dni = int(input("Ese dni ya fue ingresado. Ingrese su dni: "))
                     dni = validar_longitud_dni(dni)
                 dni_aprobado = "si"
             except:
                 print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
-        invitado.lista_dni_invitados.append(dni)
+        Invitado.lista_dni_invitados.append(dni)
         mail = input("Ingrese su mail: ")
         while mail in Usuario.lista_mail and mail in Invitado.lista_mail_invitados:
             mail = input("Ese mail ya tiene un usuario. Ingrese su mail: ")
