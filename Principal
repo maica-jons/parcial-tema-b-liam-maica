@@ -5,6 +5,7 @@ from JugadorDeCampo import JugadorDeCampo
 from Club import Club
 from Liga import Liga
 from Usuario import *
+from Invitado import Invitado
 import datetime
 import math
 
@@ -229,17 +230,18 @@ def menu():
 def menu_usuario():
     try:
         menu=int(input("""Elija una opción del menú (Ingrese el número):
-    1- Iniciar sesión
-    2- Registrarse
-    3- Cambiar contraseña
-    4- Salir
+    1- Iniciar sesión con usuario registrado
+    2- Iniciar sesion como usuario invitado
+    3- Registrar usuario
+    4- Ingresar usuario invitado
+    5- Cambiar usuario
+    6- Actualizar datos de usuario invitado
+    7- Salir
 
     """))
         return menu
     except:
         print("Error. Ingrese el numero de la opcion que desea hacer.")
-
-#  revisar los try except
 
 leer_ligas()
 leer_clubes()
@@ -472,11 +474,11 @@ def menu_principal():
             break
 
 leer_usuarios()
-while(menu_usuario != 4):
+while(menu_usuario != 6):
     entrar = "no"
     while entrar == "no":
         guardar = menu_usuario()
-        if guardar in [1,2,3,4]:
+        if guardar in [1,2,3,4,5,6]:
             entrar = "si"
 
     if guardar == 1:
@@ -496,8 +498,12 @@ while(menu_usuario != 4):
                         menu_principal()
                 if esta == "No":
                     print("El nombre de usuario no existe.")
-
     elif guardar == 2:
+        if len(Invitado.lista_invitados) == 0:
+            print("No hay ningun usuario invitado ingresado. Primero vaya a ingresarse.")
+        else: 
+            
+    elif guardar == 3:
         nombre = input("Ingrese su nombre: ")
         apellido = input("Ingrese su apellido: ")
         dni_aprobado = "no"
@@ -522,8 +528,19 @@ while(menu_usuario != 4):
         usuario = Usuario(nom_usuario, contrasena, nombre, apellido, dni, mail)
         Usuario.lista_usuarios.append(usuario)
         guardar_usuario()
-    
-    elif guardar == 3 :
+    elif guardar == 4:
+        nombre = input("Ingrese su nombre: ")
+        apellido = input("Ingrese su apellido: ")
+        dni_aprobado = "no"
+        while dni_aprobado == "no":
+            try:
+                dni = int(input("Ingrese su dni: "))
+                dni = validar_longitud_dni(dni)
+                dni_aprobado = "si"
+            except:
+                print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
+        mail = input("Ingrese su mail: ")
+    elif guardar == 5 :
         if len(Usuario.lista_usuarios) == 0:
             print("No hay ningun usuario registrado. Para cambiar una contraseña, debe haber algún usuario registrado.")
         else:
@@ -536,9 +553,11 @@ while(menu_usuario != 4):
                         guardar_usuario()
                 if esta == "No":
                     print("El nombre de usuario no existe.")
+    elif guardar == 6:
+        pass
 
-    elif guardar < 1 or guardar > 4 :
+    elif guardar < 1 or guardar > 7 :
         print("Error al elegir acción. Intente de nuevo: ")
 
-    elif guardar == 4:
+    elif guardar == 7:
         break
