@@ -607,6 +607,7 @@ while(menu_usuario != 7):
             mail = input("Ese mail ya tiene un usuario. Ingrese su mail: ")
         Invitado.lista_mail_invitados.append(mail)
         invitado = Invitado(nombre, apellido, dni, mail)
+        Invitado.lista_invitados.append(invitado)
         guardar_invitado()
     elif guardar == 5 :
         if len(Usuario.lista_usuarios) == 0:
@@ -622,7 +623,43 @@ while(menu_usuario != 7):
                 if esta == "No":
                     print("El nombre de usuario no existe.")
     elif guardar == 6:
-        pass
+        if len(Invitado.lista_invitados) == 0:
+            print("No hay ningun usuario invitado ingresado. Primero vaya a ingresarse.")
+        else:
+            print("Primero hay que buscar el usuario invitado.")
+            esta_invitado = "No"
+            while esta_invitado == "No":
+                esta_mail = "No"
+                while esta_mail == "No":
+                    email = input("Ingrese su email: ")
+                    for i in range(len(Invitado.lista_mail_invitados)):
+                        if email == Invitado.lista_mail_invitados[i].email:
+                            esta_mail = "Sí"
+                    if esta_mail == "No":
+                        print("El email no existe.")
+                esta_dni = "No"
+                while esta_dni == "No":
+                    dni_aprobado = "no"
+                    while dni_aprobado == "no":
+                        try:
+                            dni = int(input("Ingrese su dni: "))
+                            dni = validar_longitud_dni(dni)
+                            for i in range(len(Invitado.lista_dni_invitados)):
+                                if dni == Invitado.lista_dni_invitados[i].dni:
+                                    esta_dni = "Sí"
+                                    dni_aprobado = "si"
+                            if esta_dni == "No":
+                                print("El dni no existe.")
+                        except:
+                            print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
+                for i in range(len(Invitado.lista_invitados)):
+                    if dni == Invitado.lista_invitados[i].dni and email == Invitado.lista_invitados[i].email:
+                        print("Ingresado correctamente.")
+                        Invitado.lista_invitados[i].actualizar_datos()
+                        guardar_invitado()
+                if esta_invitado == "No":
+                    print("El dni y el email no coinciden. Intente nuevamente.")
+
 
     elif guardar < 1 or guardar > 7 :
         print("Error al elegir acción. Intente de nuevo: ")
