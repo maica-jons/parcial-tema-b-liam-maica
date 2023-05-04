@@ -8,6 +8,7 @@ from Usuario import *
 from Invitado import Invitado
 import datetime
 import math
+import matplotlib.pyplot as plt
 
 def validar_longitud_dni(dni):
     while dni <= 10000000 or dni >= 99999999:
@@ -257,8 +258,10 @@ def menu_usuario():
     4- Ingresar usuario invitado
     5- Cambiar usuario
     6- Actualizar datos de usuario invitado
-    8- Eliminar usuario invitado
-    7- Salir
+    7- Eliminar usuario invitado
+    8- Visualizar grafico barras 
+    9- Salir
+
 
     """))
         return menu
@@ -497,11 +500,11 @@ def menu_principal():
 
 leer_usuarios()
 leer_invitado()
-while(menu_usuario != 8):
+while(menu_usuario != 9):
     entrar = "no"
     while entrar == "no":
         guardar = menu_usuario()
-        if guardar in [1,2,3,4,5,6,7,8]:
+        if guardar in [1,2,3,4,5,6,7,8,9]:
             entrar = "si"
 
     if guardar == 1:
@@ -567,7 +570,7 @@ while(menu_usuario != 8):
             try:
                 dni = int(input("Ingrese su dni: "))
                 dni = validar_longitud_dni(dni)
-                while dni in Usuario.lista_dni and dni in Invitado.lista_dni_invitados:
+                while dni in Usuario.lista_dni or dni in Invitado.lista_dni_invitados:
                     dni = int(input("Ese dni ya fue ingresado. Ingrese su dni: "))
                     dni = validar_longitud_dni(dni)
                 dni_aprobado = "si"
@@ -575,7 +578,7 @@ while(menu_usuario != 8):
                 print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
         Usuario.lista_dni.append(dni)
         mail = input("Ingrese su mail: ")
-        while mail in Usuario.lista_mail and mail in Invitado.lista_mail_invitados:
+        while mail in Usuario.lista_mail or mail in Invitado.lista_mail_invitados:
             mail = input("Ese mail ya tiene un usuario. Ingrese su mail: ")
         Usuario.lista_mail.append(mail)
         nom_usuario = input("Ingrese un nombre de usuario: ")
@@ -604,7 +607,7 @@ while(menu_usuario != 8):
                 print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
         Invitado.lista_dni_invitados.append(dni)
         mail = input("Ingrese su mail: ")
-        while mail in Usuario.lista_mail and mail in Invitado.lista_mail_invitados:
+        while mail in Usuario.lista_mail or mail in Invitado.lista_mail_invitados:
             mail = input("Ese mail ya tiene un usuario. Ingrese su mail: ")
         Invitado.lista_mail_invitados.append(mail)
         invitado = Invitado(nombre, apellido, dni, mail)
@@ -706,11 +709,25 @@ while(menu_usuario != 8):
                         except:
                             print("El DNI está compuesto de números solamente. Ingreselo bien por favor: ")
 
+    elif guardar == 8:
+        lista_ingresos = []
+        lista_dni= []
+        for i in range(len(Invitado.lista_invitados)):
+            lista_ingresos.append(Invitado.lista_invitados[i].cantidad_ingresos)
+            lista_dni.append(Invitado.lista_invitados[i].dni)
+        minimos = sorted(zip(lista_dni, lista_ingresos), key=lambda x: x[1])[:5]
+
+        nombres_minimos = [x[0] for x in minimos]
+        valores_minimos = [x[1] for x in minimos]
+
+        plt.bar(range(5), valores_minimos, color='red')
+        plt.ylim([0, max(lista_ingresos)+1])
+        plt.xticks(range(5), nombres_minimos)
+        plt.show()
 
 
-
-    elif guardar < 1 or guardar > 8 :
+    elif guardar < 1 or guardar > 9 :
         print("Error al elegir acción. Intente de nuevo: ")
 
-    elif guardar == 8:
+    elif guardar == 9:
         break
